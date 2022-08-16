@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Henry Bugajski</title>
+    <base href="/" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+
+  <style>
+    :root {
+      --color-fg-default: #24292f;
+      --color-fg-muted: #57606a;
+      --color-fg-contrast: #fff;
+
+      --color-canvas-default: #fff;
+      --color-canvas-inset: #f6f8fa;
+
+      --color-border-default: #d0d7de;
+
+      --color-neutral-subtle: rgba(234, 238, 242, 0.5);
+
+      --color-primary: #0969da;
+      --color-primary-minus-two: #54aeff;
+      --color-primary-plus-two: #033d8b;
+      --color-primary-muted: #0550ae;
+
+      --color-accent: #8250df;
+      --color-accent-minus-two: #c297ff;
+      --color-accent-plus-two: #512a97;
+      --color-accent-muted: #6639ba;
+
+      --color-success: #1a7f37;
+      --color-success-minus-two: #4ac26b;
+      --color-success-plus-two: #044f1e;
+      --color-success-muted: #116329;
+
+      --color-danger: #cf222e;
+      --color-danger-minus-two: #ff8182;
+      --color-danger-plus-two: #82071e;
+      --color-danger-muted: #a40e26;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-fg-default: #c9d1d9;
+        --color-fg-muted: #8b949e;
+        --color-fg-contrast: #010409;
+
+        --color-canvas-default: #010409;
+        --color-canvas-inset: #0d1117;
+
+        --color-border-default: #30363d;
+
+        --color-neutral-subtle: rgba(110, 118, 129, 0.1);
+
+        --color-primary: #58a6ff;
+        --color-primary-minus-two: #a5d6ff;
+        --color-primary-plus-two: #1f6feb;
+        --color-primary-subtle: rgba(56, 139, 253, 0.05);
+        --color-primary-muted: #388bfd;
+
+        --color-accent: #bc8cff;
+        --color-accent-minus-two: #e2c5ff;
+        --color-accent-plus-two: #8957e5;
+        --color-accent-subtle: rgba(188, 140, 255, 0.05);
+        --color-accent-muted: #a371f7;
+
+        --color-success: #3fb950;
+        --color-success-minus-two: #7ee787;
+        --color-success-plus-two: #238636;
+        --color-success-subtle: rgba(63, 185, 80, 0.05);
+        --color-success-muted: #2ea043;
+
+        --color-danger: #f85149;
+        --color-danger-minus-two: #ffa198;
+        --color-danger-plus-two: #b62324;
+        --color-danger-muted: #da3633;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html,
+    body {
+      margin: 0;
+      font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Helvetica",
+        "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--color-fg-default);
+      background-color: var(--color-canvas-default);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 0 0 24px;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .toolbar {
+      display: inline-flex;
+      align-items: center;
+      width: 100%;
+      height: 56px;
+      padding: 8px;
+      background-color: var(--color-canvas-inset);
+    }
+
+    .button {
+      display: inline-flex;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: transparent;
+      border: 0;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background-color: var(--color-neutral-subtle);
+      cursor: pointer;
+    }
+
+    .button-with-icon {
+      align-items: center;
+    }
+
+    .button-with-icon .icon {
+      width: 14px;
+      height: 14px;
+      margin-left: 4px;
+    }
+
+    .button-with-icon .icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .button-primary {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-primary);
+    }
+
+    .button-primary:hover {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-primary-muted) !important;
+    }
+
+    .button-accent {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-accent);
+    }
+
+    .button-accent:hover {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-accent-muted) !important;
+    }
+
+    .button-success {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-success);
+    }
+
+    .button-success:hover {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-success-muted) !important;
+    }
+
+    .button-danger {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-danger);
+    }
+
+    .button-danger:hover {
+      color: var(--color-fg-contrast) !important;
+      background-color: var(--color-danger-muted) !important;
+    }
+
+    .button-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: calc(100vh - 56px);
+      margin-bottom: 32px;
+      padding: 0 16px;
+      background-color: var(--color-canvas-inset);
+    }
+
+    .hero h1 {
+      font-size: 56px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      color: var(--color-fg-muted);
+      font-size: 24px;
+      font-style: italic;
+    }
+
+    .gradient-header {
+      display: inline-block;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      width: fit-content;
+    }
+
+    .primary-color {
+      color: var(--color-primary);
+    }
+
+    .primary-gradient {
+      background-image: linear-gradient(
+        45deg,
+        var(--color-primary-minus-two),
+        var(--color-primary) 50%,
+        var(--color-primary-plus-two)
+      );
+    }
+
+    .accent-color {
+      color: var(--color-accent);
+    }
+
+    .accent-gradient {
+      background-image: linear-gradient(
+        45deg,
+        var(--color-accent-plus-two),
+        var(--color-accent) 50%,
+        var(--color-accent-minus-two)
+      );
+    }
+
+    .success-color {
+      color: var(--color-success);
+    }
+
+    .success-gradient {
+      background-image: linear-gradient(
+        45deg,
+        var(--color-success-minus-two),
+        var(--color-success) 50%,
+        var(--color-success-plus-two)
+      );
+    }
+
+    .danger-color {
+      color: var(--color-danger);
+    }
+
+    .danger-gradient {
+      background-image: linear-gradient(
+        45deg,
+        var(--color-danger-plus-two),
+        var(--color-danger) 50%,
+        var(--color-danger-minus-two)
+      );
+    }
+
+    section {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto 24px;
+      padding: 16px;
+    }
+
+    section h1 {
+      font-size: 48px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      border-radius: 24px;
+      background-color: var(--color-canvas-inset);
+    }
+
+    .card .title-icon svg {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+    }
+
+    svg.fill-color {
+      fill: var(--color-fg-default) !important;
+    }
+
+    svg.fill-color-contrast {
+      fill: var(--color-fg-contrast) !important;
+    }
+
+    .card .card-title-container {
+      margin-bottom: 24px;
+    }
+
+    .card .card-title-container .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card .card-title-container .card-subtitle {
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--color-fg-muted);
+    }
+
+    .card-body {
+      flex-grow: 1;
+    }
+
+    .card .card-body p:last-of-type {
+      margin: 0;
+    }
+
+    .card .card-actions {
+      margin-top: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 0 24px;
+      }
+
+      .hero h1 {
+        font-size: 128px;
+      }
+
+      .hero h2 {
+        font-size: 32px;
+      }
+
+      section {
+        padding: 24px;
+      }
+
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+    }
+  </style>
+
+  <body>
+    <div class="toolbar">
+      <a
+        href="https://github.com/hjbugajski"
+        rel="noreferrer"
+        target="_blank"
+        class="button button-link"
+      >
+        GitHub
+      </a>
+      <a
+        href="https://gitlab.com/hjbugajski-college"
+        rel="noreferrer"
+        target="_blank"
+        class="button button-link"
+      >
+        GitLab
+      </a>
+      <a
+        href="https://www.linkedin.com/in/henrybugajski/"
+        rel="noreferrer"
+        target="_blank"
+        class="button button-link"
+      >
+        LinkedIn
+      </a>
+    </div>
+    <div class="hero">
+      <div class="hero-inner-container">
+        <h1 class="gradient-header primary-color primary-gradient">
+          Henry Bugajski
+        </h1>
+        <h2>Application Developer</h2>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <section>
+      <h1 class="gradient-header accent-color accent-gradient">Experience</h1>
+      <div class="grid-container">
+        <!-- IBM -->
+        <div class="card">
+          <div class="title-icon">
+            <svg
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="fill-color"
+            >
+              <title>bee</title>
+              <path
+                d="M16,10a6,6,0,0,0-6,6v8a6,6,0,0,0,12,0V16A6,6,0,0,0,16,10Zm-4.25,7.87h8.5v4.25h-8.5ZM16,28.25A4.27,4.27,0,0,1,11.75,24v-.13h8.5V24A4.27,4.27,0,0,1,16,28.25Zm4.25-12.13h-8.5V16a4.25,4.25,0,0,1,8.5,0Z"
+              />
+              <path
+                d="M30.66,19.21,24,13v9.1a4,4,0,0,0,8,0A3.83,3.83,0,0,0,30.66,19.21ZM28,24.35a2.25,2.25,0,0,1-2.25-2.25V17l3.72,3.47h0A2.05,2.05,0,0,1,30.2,22,2.25,2.25,0,0,1,28,24.35Z"
+              />
+              <path
+                d="M0,22.1a4,4,0,0,0,8,0V13L1.34,19.21A3.88,3.88,0,0,0,0,22.1Zm2.48-1.56h0L6.25,17v5.1a2.25,2.25,0,0,1-4.5,0A2.05,2.05,0,0,1,2.48,20.54Z"
+              />
+              <path
+                d="M15,5.5A3.5,3.5,0,1,0,11.5,9,3.5,3.5,0,0,0,15,5.5Zm-5.25,0A1.75,1.75,0,1,1,11.5,7.25,1.77,1.77,0,0,1,9.75,5.5Z"
+              />
+              <path
+                d="M20.5,2A3.5,3.5,0,1,0,24,5.5,3.5,3.5,0,0,0,20.5,2Zm0,5.25A1.75,1.75,0,1,1,22.25,5.5,1.77,1.77,0,0,1,20.5,7.25Z"
+              />
+              <rect
+                id="_Transparent_Rectangle_"
+                data-name="&lt;Transparent Rectangle&gt;"
+                class="cls-1"
+                width="32"
+                height="32"
+              />
+            </svg>
+          </div>
+          <div class="card-title-container">
+            <div class="card-title">IBM &ndash; Application Developer</div>
+            <div class="card-subtitle">April 2020 &ndash; Present</div>
+          </div>
+          <div class="card-body">
+            <p>
+              At IBM, I am developing Angular based micro-apps for the new
+              online trading platform at PNC Financial Services. Previous
+              projects include working on a Vue.js web application for UPS and
+              analyzing data for Kroger's curbside pickup using Python and
+              pandas.
+            </p>
+          </div>
+          <div class="card-actions">
+            <a
+              href="https://ibm.com"
+              rel="noreferrer"
+              target="_blank"
+              class="button button-link button-accent button-with-icon"
+            >
+              IBM
+              <span class="icon">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 134 134"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xml:space="preserve"
+                  xmlns:serif="http://www.serif.com/"
+                  style="
+                    fill-rule: evenodd;
+                    clip-rule: evenodd;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 2;
+                  "
+                  class="fill-color-contrast"
+                >
+                  <path
+                    d="M108.333,116.667l-83.333,-0c-4.569,-0.006 -8.327,-3.764 -8.333,-8.334l-0,-83.333c0.006,-4.569 3.764,-8.327 8.333,-8.333l41.667,-0l-0,8.333l-41.667,0l0,83.333l83.333,0l0,-41.666l8.334,-0l-0,41.666c-0.006,4.57 -3.764,8.328 -8.334,8.334Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <path
+                    d="M83.333,8.333l0,8.334l27.442,-0l-35.775,35.775l5.892,5.891l35.775,-35.775l-0,27.442l8.333,0l0,-41.667l-41.667,0Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <rect
+                    id="_Transparent_Rectangle_"
+                    x="0"
+                    y="0"
+                    width="133.333"
+                    height="133.333"
+                    style="fill: none"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <h1 class="gradient-header success-color success-gradient">Projects</h1>
+      <div class="grid-container">
+        <!-- ApplicationTrackr -->
+        <div class="card">
+          <div class="title-icon">
+            <svg
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="fill-color"
+            >
+              <defs>
+                <style>
+                  .cls-1 {
+                    fill: none;
+                  }
+                </style>
+              </defs>
+              <title>compass</title>
+              <path
+                d="M16,4A12,12,0,1,1,4,16,12,12,0,0,1,16,4m0-2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Z"
+              />
+              <path
+                d="M23,10.41,21.59,9l-4.3,4.3a3,3,0,0,0-4,4L9,21.59,10.41,23l4.3-4.3a3,3,0,0,0,4-4ZM17,16a1,1,0,1,1-1-1A1,1,0,0,1,17,16Z"
+              />
+              <circle cx="16" cy="7.5" r="1.5" />
+              <rect
+                id="_Transparent_Rectangle_"
+                data-name="&lt;Transparent Rectangle&gt;"
+                class="cls-1"
+                width="32"
+                height="32"
+              />
+            </svg>
+          </div>
+          <div class="card-title-container">
+            <div class="card-title">ApplicationTrackr</div>
+            <div class="card-subtitle">August 2019 &ndash; Present</div>
+          </div>
+          <div class="card-body">
+            <p>
+              ApplicationTrackr helps you organize your ever growing list of job
+              or internship applications. It was developed to be a better—and
+              more visually appealing—alternative to tracking applications in a
+              spreadsheet.
+            </p>
+          </div>
+          <div class="card-actions">
+            <a
+              href="https://applicationtrackr.io"
+              rel="noreferrer"
+              target="_blank"
+              class="button button-link button-success button-with-icon"
+            >
+              Application
+              <span class="icon">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 134 134"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xml:space="preserve"
+                  xmlns:serif="http://www.serif.com/"
+                  style="
+                    fill-rule: evenodd;
+                    clip-rule: evenodd;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 2;
+                  "
+                  class="fill-color-contrast"
+                >
+                  <path
+                    d="M108.333,116.667l-83.333,-0c-4.569,-0.006 -8.327,-3.764 -8.333,-8.334l-0,-83.333c0.006,-4.569 3.764,-8.327 8.333,-8.333l41.667,-0l-0,8.333l-41.667,0l0,83.333l83.333,0l0,-41.666l8.334,-0l-0,41.666c-0.006,4.57 -3.764,8.328 -8.334,8.334Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <path
+                    d="M83.333,8.333l0,8.334l27.442,-0l-35.775,35.775l5.892,5.891l35.775,-35.775l-0,27.442l8.333,0l0,-41.667l-41.667,0Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <rect
+                    id="_Transparent_Rectangle_"
+                    x="0"
+                    y="0"
+                    width="133.333"
+                    height="133.333"
+                    style="fill: none"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Social Media Bio Link Page -->
+        <div class="card">
+          <div class="title-icon">
+            <svg
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="fill-color"
+            >
+              <title>link</title>
+              <path
+                d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"
+              />
+              <path
+                d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"
+              />
+              <rect
+                id="_Transparent_Rectangle_"
+                data-name="&lt;Transparent Rectangle&gt;"
+                class="cls-1"
+                width="32"
+                height="32"
+              />
+            </svg>
+          </div>
+          <div class="card-title-container">
+            <div class="card-title">Social Media Bio Link Page</div>
+            <div class="card-subtitle">August 2022 &ndash; Present</div>
+          </div>
+          <div class="card-body">
+            <p>
+              A social media bio link page similar to Linktree for Jesse
+              Reichenbaum, but fully custom. Includes a bio picture, name, and
+              links with accompanying social icons.
+            </p>
+          </div>
+          <div class="card-actions">
+            <a
+              href="https://jessesbookshelf.com"
+              rel="noreferrer"
+              target="_blank"
+              class="button button-link button-success button-with-icon"
+            >
+              Link page
+              <span class="icon">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 134 134"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xml:space="preserve"
+                  xmlns:serif="http://www.serif.com/"
+                  style="
+                    fill-rule: evenodd;
+                    clip-rule: evenodd;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 2;
+                  "
+                  class="fill-color-contrast"
+                >
+                  <path
+                    d="M108.333,116.667l-83.333,-0c-4.569,-0.006 -8.327,-3.764 -8.333,-8.334l-0,-83.333c0.006,-4.569 3.764,-8.327 8.333,-8.333l41.667,-0l-0,8.333l-41.667,0l0,83.333l83.333,0l0,-41.666l8.334,-0l-0,41.666c-0.006,4.57 -3.764,8.328 -8.334,8.334Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <path
+                    d="M83.333,8.333l0,8.334l27.442,-0l-35.775,35.775l5.892,5.891l35.775,-35.775l-0,27.442l8.333,0l0,-41.667l-41.667,0Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <rect
+                    id="_Transparent_Rectangle_"
+                    x="0"
+                    y="0"
+                    width="133.333"
+                    height="133.333"
+                    style="fill: none"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Photography Portfolio -->
+        <div class="card">
+          <div class="title-icon">
+            <svg
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="fill-color"
+            >
+              <title>camera</title>
+              <path
+                d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+              />
+              <path
+                d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+              />
+              <rect
+                id="_Transparent_Rectangle_"
+                data-name="&lt;Transparent Rectangle&gt;"
+                class="cls-1"
+                width="32"
+                height="32"
+              />
+            </svg>
+          </div>
+          <div class="card-title-container">
+            <div class="card-title">Photography Portfolio</div>
+            <div class="card-subtitle">September 2020 &ndash; Present</div>
+          </div>
+          <div class="card-body">
+            <p>
+              A photography portfolio for Marco Santana, which serves as a
+              sectioned gallery based on the subject of the photos.
+            </p>
+          </div>
+          <div class="card-actions">
+            <a
+              href="https://marco-santana.com"
+              rel="noreferrer"
+              target="_blank"
+              class="button button-link button-success button-with-icon"
+            >
+              Portfolio
+              <span class="icon">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 134 134"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xml:space="preserve"
+                  xmlns:serif="http://www.serif.com/"
+                  style="
+                    fill-rule: evenodd;
+                    clip-rule: evenodd;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 2;
+                  "
+                  class="fill-color-contrast"
+                >
+                  <path
+                    d="M108.333,116.667l-83.333,-0c-4.569,-0.006 -8.327,-3.764 -8.333,-8.334l-0,-83.333c0.006,-4.569 3.764,-8.327 8.333,-8.333l41.667,-0l-0,8.333l-41.667,0l0,83.333l83.333,0l0,-41.666l8.334,-0l-0,41.666c-0.006,4.57 -3.764,8.328 -8.334,8.334Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <path
+                    d="M83.333,8.333l0,8.334l27.442,-0l-35.775,35.775l5.892,5.891l35.775,-35.775l-0,27.442l8.333,0l0,-41.667l-41.667,0Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <rect
+                    id="_Transparent_Rectangle_"
+                    x="0"
+                    y="0"
+                    width="133.333"
+                    height="133.333"
+                    style="fill: none"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Academic -->
+    <section>
+      <h1 class="gradient-header danger-color danger-gradient">Academic</h1>
+      <div class="grid-container">
+        <!-- The University of Alabama -->
+        <div class="card">
+          <div class="title-icon">
+            <svg
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="fill-color"
+            >
+              <title>education</title>
+              <path
+                d="M26,30H24V27a5.0059,5.0059,0,0,0-5-5H13a5.0059,5.0059,0,0,0-5,5v3H6V27a7.0082,7.0082,0,0,1,7-7h6a7.0082,7.0082,0,0,1,7,7Z"
+              />
+              <path d="M5,6A1,1,0,0,0,4,7v9H6V7A1,1,0,0,0,5,6Z" />
+              <path
+                d="M4,2V4H9v7a7,7,0,0,0,14,0V4h5V2Zm7,2H21V7H11Zm5,12a5,5,0,0,1-5-5V9H21v2A5,5,0,0,1,16,16Z"
+              />
+              <rect
+                id="_Transparent_Rectangle_"
+                data-name="&lt;Transparent Rectangle&gt;"
+                class="cls-1"
+                width="32"
+                height="32"
+              />
+            </svg>
+          </div>
+          <div class="card-title-container">
+            <div class="card-title">The University of Alabama</div>
+            <div class="card-subtitle">B.S. Computer Science, 2015</div>
+          </div>
+          <div class="card-body">
+            <p>
+              While at The University of Alabama, I was a member of the
+              Association for Computing Machinery (ACM) for two years and then
+              led the development team my third year. I also was a member of The
+              University of Alabama Dance Marathon (UADM), and, in my third
+              year, I was the Director of Entertainment and productions.
+            </p>
+          </div>
+          <div class="card-actions">
+            <a
+              href="https://www.uadm.org/"
+              rel="noreferrer"
+              target="_blank"
+              class="button button-link button-danger button-with-icon"
+            >
+              UADM
+              <span class="icon">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 134 134"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xml:space="preserve"
+                  xmlns:serif="http://www.serif.com/"
+                  style="
+                    fill-rule: evenodd;
+                    clip-rule: evenodd;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 2;
+                  "
+                  class="fill-color-contrast"
+                >
+                  <path
+                    d="M108.333,116.667l-83.333,-0c-4.569,-0.006 -8.327,-3.764 -8.333,-8.334l-0,-83.333c0.006,-4.569 3.764,-8.327 8.333,-8.333l41.667,-0l-0,8.333l-41.667,0l0,83.333l83.333,0l0,-41.666l8.334,-0l-0,41.666c-0.006,4.57 -3.764,8.328 -8.334,8.334Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <path
+                    d="M83.333,8.333l0,8.334l27.442,-0l-35.775,35.775l5.892,5.891l35.775,-35.775l-0,27.442l8.333,0l0,-41.667l-41.667,0Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <rect
+                    id="_Transparent_Rectangle_"
+                    x="0"
+                    y="0"
+                    width="133.333"
+                    height="133.333"
+                    style="fill: none"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Academic Projects -->
+        <div class="card">
+          <div class="title-icon">
+            <svg
+              id="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="fill-color"
+            >
+              <title>code</title>
+              <polygon
+                points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16"
+              />
+              <polygon
+                points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16"
+              />
+              <rect
+                x="5.91"
+                y="15"
+                width="20.17"
+                height="2"
+                transform="translate(-3.6 27.31) rotate(-75)"
+              />
+              <rect
+                id="_Transparent_Rectangle_"
+                data-name="&lt;Transparent Rectangle&gt;"
+                class="cls-1"
+                width="32"
+                height="32"
+                transform="translate(0 32) rotate(-90)"
+              />
+            </svg>
+          </div>
+          <div class="card-title-container">
+            <div class="card-title">Academic Projects</div>
+            <div class="card-subtitle">September 2016 &ndash; May 2019</div>
+          </div>
+          <div class="card-body">
+            <p>
+              All major programming assignments completed in college. Projects
+              include my own programming language, functional programming
+              assignments written in Scheme, data structures written in C,
+              programs for operating systems written in C, and a project for
+              relational databases.
+            </p>
+          </div>
+          <div class="card-actions">
+            <a
+              href="https://gitlab.com/hjbugajski-college"
+              rel="noreferrer"
+              target="_blank"
+              class="button button-link button-danger button-with-icon"
+            >
+              Repositories
+              <span class="icon">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 134 134"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xml:space="preserve"
+                  xmlns:serif="http://www.serif.com/"
+                  style="
+                    fill-rule: evenodd;
+                    clip-rule: evenodd;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 2;
+                  "
+                  class="fill-color-contrast"
+                >
+                  <path
+                    d="M108.333,116.667l-83.333,-0c-4.569,-0.006 -8.327,-3.764 -8.333,-8.334l-0,-83.333c0.006,-4.569 3.764,-8.327 8.333,-8.333l41.667,-0l-0,8.333l-41.667,0l0,83.333l83.333,0l0,-41.666l8.334,-0l-0,41.666c-0.006,4.57 -3.764,8.328 -8.334,8.334Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <path
+                    d="M83.333,8.333l0,8.334l27.442,-0l-35.775,35.775l5.892,5.891l35.775,-35.775l-0,27.442l8.333,0l0,-41.667l-41.667,0Z"
+                    style="
+                      fill-rule: nonzero;
+                      stroke: currentColor;
+                      stroke-width: 6.25px;
+                    "
+                  />
+                  <rect
+                    id="_Transparent_Rectangle_"
+                    x="0"
+                    y="0"
+                    width="133.333"
+                    height="133.333"
+                    style="fill: none"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
