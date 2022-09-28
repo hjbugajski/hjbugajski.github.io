@@ -20,6 +20,7 @@
 
       --color-canvas-default: #fff;
       --color-canvas-inset: #f6f8fa;
+      --color-canvas-alt: #424a53;
 
       --color-border-default: #d0d7de;
 
@@ -44,6 +45,8 @@
       --color-danger-minus-two: #ff8182;
       --color-danger-plus-two: #82071e;
       --color-danger-muted: #a40e26;
+
+      --color-attention-fg: #9a6700;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -54,6 +57,7 @@
 
         --color-canvas-default: #010409;
         --color-canvas-inset: #0d1117;
+        --color-canvas-alt: #21262d;
 
         --color-border-default: #30363d;
 
@@ -81,6 +85,8 @@
         --color-danger-minus-two: #ffa198;
         --color-danger-plus-two: #b62324;
         --color-danger-muted: #da3633;
+
+        --color-attention-fg: #d29922;
       }
     }
 
@@ -88,6 +94,7 @@
       box-sizing: border-box;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      line-height: 1.25;
     }
 
     html,
@@ -124,17 +131,23 @@
 
     .button {
       display: inline-flex;
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 12px 24px;
+      border-radius: 100px;
       font-size: 14px;
       background-color: transparent;
       border: 0;
       font-weight: 600;
+      transition: background-color ease-in-out 225ms;
     }
 
     .button:hover {
       background-color: var(--color-neutral-subtle);
       cursor: pointer;
+      transition: background-color ease-in-out 225ms;
+    }
+
+    .button:focus {
+      outline: 2px solid var(--color-fg-default);
     }
 
     .button-with-icon {
@@ -145,11 +158,6 @@
       width: 14px;
       height: 14px;
       margin-left: 4px;
-    }
-
-    .button-with-icon .icon svg {
-      width: 14px;
-      height: 14px;
     }
 
     .button-primary {
@@ -279,7 +287,7 @@
     }
 
     section {
-      max-width: 1200px;
+      max-width: 1440px;
       width: 100%;
       margin: 0 auto 24px;
       padding: 16px;
@@ -287,6 +295,14 @@
 
     section h1 {
       font-size: 48px;
+    }
+
+    svg.fill-color {
+      fill: var(--color-fg-default) !important;
+    }
+
+    svg.fill-color-contrast {
+      fill: var(--color-fg-contrast) !important;
     }
 
     .grid-container {
@@ -309,14 +325,6 @@
       margin-bottom: 8px;
     }
 
-    svg.fill-color {
-      fill: var(--color-fg-default) !important;
-    }
-
-    svg.fill-color-contrast {
-      fill: var(--color-fg-contrast) !important;
-    }
-
     .card .card-title-container {
       margin-bottom: 24px;
     }
@@ -332,6 +340,13 @@
       font-style: italic;
       font-weight: 500;
       color: var(--color-fg-muted);
+    }
+
+    .card-title-with-icon {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 8px;
     }
 
     .card-body {
@@ -350,8 +365,34 @@
       margin-top: 24px;
     }
 
+    .card-wip {
+      background-color: transparent;
+      border: 2px dashed var(--color-border-default);
+    }
+
     .cls-1 {
       fill: none;
+    }
+
+    .tags-container {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      padding: 4px 12px;
+      border-radius: 50px;
+      border: 2px solid var(--color-border-default);
+      color: var(--color-fg-muted);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .wip-color {
+      color: var(--color-attention-fg) !important;
+      fill: var(--color-attention-fg) !important;
     }
 
     @media (min-width: 768px) {
@@ -373,7 +414,12 @@
 
       .grid-container {
         grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
+        gap: 36px;
+      }
+
+      .card {
+        padding: 36px;
+        border-radius: 36px;
       }
     }
   </style>
@@ -423,41 +469,20 @@
         <div class="grid-container">
           <!-- IBM -->
           <div class="card">
-            <div class="title-icon">
-              <svg
-                id="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="fill-color"
-              >
-                <title>bee</title>
-                <path
-                  d="M16,10a6,6,0,0,0-6,6v8a6,6,0,0,0,12,0V16A6,6,0,0,0,16,10Zm-4.25,7.87h8.5v4.25h-8.5ZM16,28.25A4.27,4.27,0,0,1,11.75,24v-.13h8.5V24A4.27,4.27,0,0,1,16,28.25Zm4.25-12.13h-8.5V16a4.25,4.25,0,0,1,8.5,0Z"
-                />
-                <path
-                  d="M30.66,19.21,24,13v9.1a4,4,0,0,0,8,0A3.83,3.83,0,0,0,30.66,19.21ZM28,24.35a2.25,2.25,0,0,1-2.25-2.25V17l3.72,3.47h0A2.05,2.05,0,0,1,30.2,22,2.25,2.25,0,0,1,28,24.35Z"
-                />
-                <path
-                  d="M0,22.1a4,4,0,0,0,8,0V13L1.34,19.21A3.88,3.88,0,0,0,0,22.1Zm2.48-1.56h0L6.25,17v5.1a2.25,2.25,0,0,1-4.5,0A2.05,2.05,0,0,1,2.48,20.54Z"
-                />
-                <path
-                  d="M15,5.5A3.5,3.5,0,1,0,11.5,9,3.5,3.5,0,0,0,15,5.5Zm-5.25,0A1.75,1.75,0,1,1,11.5,7.25,1.77,1.77,0,0,1,9.75,5.5Z"
-                />
-                <path
-                  d="M20.5,2A3.5,3.5,0,1,0,24,5.5,3.5,3.5,0,0,0,20.5,2Zm0,5.25A1.75,1.75,0,1,1,22.25,5.5,1.77,1.77,0,0,1,20.5,7.25Z"
-                />
-                <rect
-                  id="_Transparent_Rectangle_"
-                  data-name="&lt;Transparent Rectangle&gt;"
-                  class="cls-1"
-                  width="32"
-                  height="32"
-                />
-              </svg>
-            </div>
             <div class="card-title-container">
               <div class="card-title">IBM &ndash; Application Developer</div>
               <div class="card-subtitle">April 2020 &ndash; Present</div>
+              <div class="tags-container">
+                <span class="tag tag-wip">Angular</span>
+                <span class="tag tag-wip">Vue</span>
+                <span class="tag tag-wip">TypeScript</span>
+                <span class="tag tag-wip">Git</span>
+                <span class="tag tag-wip">Python</span>
+                <span class="tag tag-wip">PostgreSQL</span>
+                <span class="tag tag-wip">Jenkins</span>
+                <span class="tag tag-wip">OpenShift</span>
+                <span class="tag tag-wip">Docker</span>
+              </div>
             </div>
             <div class="card-body">
               <p>
@@ -468,10 +493,10 @@
                 pandas.
               </p>
               <p>
-                Helped develop a web application with IBM Consulting Canada
-                called Project Peace Out, which allowed Non-Governmental
-                Organizations to securely accelerate the relocation of Afghan
-                refugees to Canada.
+                Helped develop a web application for Project Peace Out with IBM
+                Consulting Canada, which allowed Non-Governmental Organizations
+                to securely accelerate the relocation of Afghan refugees to
+                Canada.
               </p>
             </div>
             <div class="card-actions">
@@ -538,33 +563,14 @@
         <div class="grid-container">
           <!-- ApplicationTrackr -->
           <div class="card">
-            <div class="title-icon">
-              <svg
-                id="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="fill-color"
-              >
-                <title>compass</title>
-                <path
-                  d="M16,4A12,12,0,1,1,4,16,12,12,0,0,1,16,4m0-2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Z"
-                />
-                <path
-                  d="M23,10.41,21.59,9l-4.3,4.3a3,3,0,0,0-4,4L9,21.59,10.41,23l4.3-4.3a3,3,0,0,0,4-4ZM17,16a1,1,0,1,1-1-1A1,1,0,0,1,17,16Z"
-                />
-                <circle cx="16" cy="7.5" r="1.5" />
-                <rect
-                  id="_Transparent_Rectangle_"
-                  data-name="&lt;Transparent Rectangle&gt;"
-                  class="cls-1"
-                  width="32"
-                  height="32"
-                />
-              </svg>
-            </div>
             <div class="card-title-container">
               <div class="card-title">ApplicationTrackr</div>
               <div class="card-subtitle">August 2019 &ndash; Present</div>
+              <div class="tags-container">
+                <span class="tag">Angular</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Firebase</span>
+              </div>
             </div>
             <div class="card-body">
               <p>
@@ -632,32 +638,13 @@
 
           <!-- Social Media Bio Link Page -->
           <div class="card">
-            <div class="title-icon">
-              <svg
-                id="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="fill-color"
-              >
-                <title>link</title>
-                <path
-                  d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"
-                />
-                <path
-                  d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"
-                />
-                <rect
-                  id="_Transparent_Rectangle_"
-                  data-name="&lt;Transparent Rectangle&gt;"
-                  class="cls-1"
-                  width="32"
-                  height="32"
-                />
-              </svg>
-            </div>
             <div class="card-title-container">
               <div class="card-title">Social Media Bio Link Page</div>
               <div class="card-subtitle">August 2022 &ndash; Present</div>
+              <div class="tags-container">
+                <span class="tag">Vue 3</span>
+                <span class="tag">Firebase</span>
+              </div>
             </div>
             <div class="card-body">
               <p>
@@ -724,32 +711,14 @@
 
           <!-- Photography Portfolio -->
           <div class="card">
-            <div class="title-icon">
-              <svg
-                id="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="fill-color"
-              >
-                <title>camera</title>
-                <path
-                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
-                />
-                <path
-                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
-                />
-                <rect
-                  id="_Transparent_Rectangle_"
-                  data-name="&lt;Transparent Rectangle&gt;"
-                  class="cls-1"
-                  width="32"
-                  height="32"
-                />
-              </svg>
-            </div>
             <div class="card-title-container">
               <div class="card-title">Photography Portfolio</div>
               <div class="card-subtitle">September 2020 &ndash; Present</div>
+              <div class="tags-container">
+                <span class="tag">Vue 2</span>
+                <span class="tag">Bootstrap</span>
+                <span class="tag">Firebase</span>
+              </div>
             </div>
             <div class="card-body">
               <p>
@@ -812,6 +781,59 @@
               </a>
             </div>
           </div>
+
+          <!-- Photography Portfolio WIP -->
+          <div class="card card-wip">
+            <div class="card-title-container">
+              <div class="card-title-with-icon">
+                <div>
+                  <div class="card-title">Photography Portfolio</div>
+                  <div class="card-subtitle">
+                    September 2022 &ndash; Present
+                  </div>
+                </div>
+                <div class="title-icon">
+                  <svg
+                    id="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 32 32"
+                    class="wip-color"
+                  >
+                    <title>warning</title>
+                    <path
+                      d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z"
+                      transform="translate(0 0)"
+                    />
+                    <rect x="15" y="8" width="2" height="11" />
+                    <path
+                      d="M16,22a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,16,22Z"
+                      transform="translate(0 0)"
+                    />
+                    <rect
+                      id="_Transparent_Rectangle_"
+                      data-name="&lt;Transparent Rectangle&gt;"
+                      class="cls-1"
+                      width="32"
+                      height="32"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="tags-container">
+                <span class="tag tag-wip">React</span>
+                <span class="tag tag-wip">TypeScript</span>
+                <span class="tag tag-wip">Supabase</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="wip-color">Work in progress.</p>
+              <p>
+                A photography portfolio for Marco Santana with an e-commerce
+                shop for prints. Includes a custom purpose built React component
+                library.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -821,30 +843,6 @@
         <div class="grid-container">
           <!-- The University of Alabama -->
           <div class="card">
-            <div class="title-icon">
-              <svg
-                id="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="fill-color"
-              >
-                <title>education</title>
-                <path
-                  d="M26,30H24V27a5.0059,5.0059,0,0,0-5-5H13a5.0059,5.0059,0,0,0-5,5v3H6V27a7.0082,7.0082,0,0,1,7-7h6a7.0082,7.0082,0,0,1,7,7Z"
-                />
-                <path d="M5,6A1,1,0,0,0,4,7v9H6V7A1,1,0,0,0,5,6Z" />
-                <path
-                  d="M4,2V4H9v7a7,7,0,0,0,14,0V4h5V2Zm7,2H21V7H11Zm5,12a5,5,0,0,1-5-5V9H21v2A5,5,0,0,1,16,16Z"
-                />
-                <rect
-                  id="_Transparent_Rectangle_"
-                  data-name="&lt;Transparent Rectangle&gt;"
-                  class="cls-1"
-                  width="32"
-                  height="32"
-                />
-              </svg>
-            </div>
             <div class="card-title-container">
               <div class="card-title">The University of Alabama</div>
               <div class="card-subtitle">B.S. Computer Science, 2019</div>
@@ -918,40 +916,16 @@
 
           <!-- Academic Projects -->
           <div class="card">
-            <div class="title-icon">
-              <svg
-                id="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="fill-color"
-              >
-                <title>code</title>
-                <polygon
-                  points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16"
-                />
-                <polygon
-                  points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16"
-                />
-                <rect
-                  x="5.91"
-                  y="15"
-                  width="20.17"
-                  height="2"
-                  transform="translate(-3.6 27.31) rotate(-75)"
-                />
-                <rect
-                  id="_Transparent_Rectangle_"
-                  data-name="&lt;Transparent Rectangle&gt;"
-                  class="cls-1"
-                  width="32"
-                  height="32"
-                  transform="translate(0 32) rotate(-90)"
-                />
-              </svg>
-            </div>
             <div class="card-title-container">
               <div class="card-title">Academic Projects</div>
               <div class="card-subtitle">September 2016 &ndash; May 2019</div>
+              <div class="tags-container">
+                <span class="tag tag-wip">C</span>
+                <span class="tag tag-wip">C++</span>
+                <span class="tag tag-wip">Java</span>
+                <span class="tag tag-wip">SQL</span>
+                <span class="tag tag-wip">Scheme</span>
+              </div>
             </div>
             <div class="card-body">
               <p>
